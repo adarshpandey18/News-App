@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:news_app/widgets/loading.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -49,10 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(
               height: heightScreen * 0.05,
             ),
-            const SpinKitDoubleBounce(
-              color: Colors.black38,
-              size: 50.0,
-            ),
+            const Loading(),
           ],
         ),
       ),
