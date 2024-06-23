@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:news_app/models/news_channel_headline.dart';
-import 'package:news_app/secrets/secrets.dart';
+import 'package:news_app/core/secrets/secrets.dart';
 
 class NewsRepository {
   final String sources;

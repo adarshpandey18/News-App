@@ -1,6 +1,6 @@
-import 'dart:io';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/core/sources.dart';
 import 'package:news_app/models/news_channel_headline.dart';
 import 'package:news_app/view_model/NewsViewMode.dart';
 import 'package:news_app/widgets/drawer_tile.dart';
@@ -41,6 +41,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         elevation: 0,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/category_screen');
+              },
+              icon: const Icon(Icons.category)),
+        ],
       ),
       drawer: Drawer(
         child: Column(
@@ -51,10 +58,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 size: 50,
               ),
             ),
-            DrawerTile(
-                text: 'BCC News', function: () => changeSource('bbc-news')),
-            DrawerTile(
-                text: 'CBC News', function: () => changeSource('cbc-news')),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: sourceValue.length,
+                  itemBuilder: (context, index) {
+                    return DrawerTile(
+                        text: sourceValue.keys.elementAt(index),
+                        function: () =>
+                            changeSource(sourceValue.values.elementAt(index)));
+                  }),
+            )
           ],
         ),
       ),

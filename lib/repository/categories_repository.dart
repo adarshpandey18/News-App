@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:news_app/models/cateogory_news_model.dart';
-import 'package:news_app/secrets/secrets.dart';
+import 'package:news_app/core/secrets/secrets.dart';
 
 class CategoriesRepository {
   final String category;
@@ -11,7 +11,7 @@ class CategoriesRepository {
   CategoriesRepository({required this.category});
 
   Future<CategoryNews> fetchNewsCategoryHeadlineApi() async {
-    String url = "https://newsapi.org/v2/top-headlines/sources?category=$category&apiKey=$keyAPI";
+    String url = "https://newsapi.org/v2/top-headlines/sources?category=$category&language=en&apiKey=$keyAPI";
     try {
       final response = await http.get(Uri.parse(url));
 
