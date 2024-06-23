@@ -2,27 +2,24 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:news_app/models/news_channel_headline.dart';
+import 'package:news_app/models/cateogory_news_model.dart';
 import 'package:news_app/secrets/secrets.dart';
 
-class NewsRepository {
-  final String sources;
+class CategoriesRepository {
+  final String category;
+  
+  CategoriesRepository({required this.category});
 
-  NewsRepository({required this.sources});
-
-  Future<NewsChannelHeadline> fetchNewsChannelHeadlineApi() async {
-    String url =
-        "https://newsapi.org/v2/top-headlines?sources=$sources&apiKey=$keyAPI";
-
+  Future<CategoryNews> fetchNewsCategoryHeadlineApi() async {
+    String url = "https://newsapi.org/v2/top-headlines/sources?category=$category&apiKey=$keyAPI";
     try {
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
-        return NewsChannelHeadline.fromJson(body);
+        return CategoryNews.fromJson(body);
       } else {
-        throw Exception(
-            "Failed to load news. Status Code: ${response.statusCode}");
+        throw Exception("Failed to load news. Status Code: ${response.statusCode}");
       }
     } catch (e) {
       if (kDebugMode) {
