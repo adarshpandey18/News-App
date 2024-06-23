@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:news_app/core/sources.dart';
 import 'package:news_app/models/news_channel_headline.dart';
+import 'package:news_app/pages/more_information.dart';
 import 'package:news_app/view_model/NewsViewMode.dart';
 import 'package:news_app/widgets/drawer_tile.dart';
 import 'package:news_app/widgets/heading.dart';
@@ -27,6 +29,35 @@ class _HomeScreenState extends State<HomeScreen> {
       newsViewModel = NewsViewModel(sources: newSource);
       Navigator.pop(context);
     });
+  }
+
+  void onTap(
+    String imageUrl,
+    String source,
+    String date,
+    String description,
+    String content,
+    String url,
+  ) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MoreInformation(
+          imageUrl: imageUrl,
+          source: source,
+          date: date,
+          description: description,
+          content: content,
+          url: url,
+        ),
+      ),
+    );
+  }
+
+  String formatDateTime(String dateTimeString) {
+    DateTime dateTime = DateTime.parse(dateTimeString);
+    String formattedDateTime = DateFormat('dd-MM-yyyy').format(dateTime);
+    return formattedDateTime;
   }
 
   @override
@@ -96,6 +127,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     imageUrl: article.urlToImage ?? "",
                     title: article.title ?? "",
                     source: article.source?.name ?? "",
+                    onTap: () => onTap(
+                        article.urlToImage ?? "",
+                        article.source?.name ?? "",
+                        formatDateTime(
+                          article.publishedAt.toString(),
+                        ),
+                        article.description.toString(),
+                        article.content.toString(),
+                        article.url ?? ""),
                   );
                 },
               ),

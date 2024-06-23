@@ -7,7 +7,7 @@ import 'package:news_app/widgets/loading.dart';
 import 'package:news_app/widgets/news_tile.dart';
 
 class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({Key? key}) : super(key: key);
+  const CategoryScreen({super.key});
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();

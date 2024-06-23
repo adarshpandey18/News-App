@@ -7,11 +7,12 @@ import 'package:news_app/core/secrets/secrets.dart';
 
 class CategoriesRepository {
   final String category;
-  
+
   CategoriesRepository({required this.category});
 
   Future<CategoryNews> fetchNewsCategoryHeadlineApi() async {
-    String url = "https://newsapi.org/v2/top-headlines/sources?category=$category&language=en&apiKey=$keyAPI";
+    String url =
+        "https://newsapi.org/v2/top-headlines/sources?category=$category&apiKey=$keyAPI";
     try {
       final response = await http.get(Uri.parse(url));
 
@@ -19,7 +20,8 @@ class CategoriesRepository {
         final body = jsonDecode(response.body);
         return CategoryNews.fromJson(body);
       } else {
-        throw Exception("Failed to load news. Status Code: ${response.statusCode}");
+        throw Exception(
+            "Failed to load news. Status Code: ${response.statusCode}");
       }
     } catch (e) {
       if (kDebugMode) {

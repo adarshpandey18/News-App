@@ -6,19 +6,22 @@ class Heading extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String source;
+  final VoidCallback onTap;
 
   const Heading({
     super.key,
     required this.imageUrl,
     required this.title,
     required this.source,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      child: SizedBox(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10),
         width: 300,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,9 +29,9 @@ class Heading extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: CachedNetworkImage(
-                height: 200,
-                width: 400,
                 imageUrl: imageUrl,
+                width: double.infinity,
+                height: 200,
                 fit: BoxFit.cover,
                 placeholder: (context, url) => const Center(
                   child: Loading(),
@@ -37,13 +40,12 @@ class Heading extends StatelessWidget {
                   child: Icon(
                     Icons.error,
                     color: Colors.redAccent,
+                    size: 40,
                   ),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Text(
               title,
               maxLines: 2,

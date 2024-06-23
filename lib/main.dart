@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/pages/category_screen.dart';
 import 'package:news_app/pages/home_screen.dart';
+import 'package:news_app/pages/more_information.dart';
 import 'package:news_app/pages/splash_screen.dart';
 
 void main() {

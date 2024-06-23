@@ -18,8 +18,8 @@ class NewsTile extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.grey[100],
-        border: Border.all(color: Colors.grey[300]!), // Optional: add border
-        borderRadius: BorderRadius.circular(8), // Optional: rounded corners
+        border: Border.all(color: Colors.grey[300]!), 
+        borderRadius: BorderRadius.circular(8), 
       ),
       margin: const EdgeInsets.symmetric(vertical: 5),
       child: ListTile(
