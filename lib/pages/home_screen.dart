@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:news_app/core/sources.dart';
@@ -81,10 +80,17 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/category_screen');
-              },
-              icon: const Icon(Icons.category)),
+            onPressed: () {
+              Navigator.pushNamed(context, '/search_screen');
+            },
+            icon: const Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/category_screen');
+            },
+            icon: const Icon(Icons.category),
+          ),
         ],
       ),
       drawer: Drawer(
