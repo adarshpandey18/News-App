@@ -86,6 +86,7 @@ project_root/
 - **Search Screen**: Search for specific news articles using keywords.
 - **Article Details**: View detailed information about each article including images, source, date, description, and content.
 - **Navigation Drawer**: Easy navigation through different sections of the app.
+- **URL Launcher Integration**: Utilizes url_launcher to open article URLs in the default browser.
 
 ---
 
@@ -94,6 +95,7 @@ project_root/
 <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
     <img src="https://github.com/adarshpandey18/News-App/blob/main/screenshot/screenshot_1.jpg" alt="Screenshot 1" style="width: 30%; margin-bottom: 10px;">
     <img src="https://github.com/adarshpandey18/News-App/blob/main/screenshot/screenshot_2.jpg" alt="Screenshot 2" style="width: 30%; margin-bottom: 10px;">
+    <img src="https://github.com/adarshpandey18/News-App/blob/main/screenshot/screenshot_6.jpg" alt="Screenshot 6" style="width: 30%; margin-bottom: 10px;">
     <img src="https://github.com/adarshpandey18/News-App/blob/main/screenshot/screenshot_3.jpg" alt="Screenshot 3" style="width: 30%; margin-bottom: 10px;">
     <img src="https://github.com/adarshpandey18/News-App/blob/main/screenshot/screenshot_4.jpg" alt="Screenshot 4" style="width: 30%; margin-bottom: 10px;">
     <img src="https://github.com/adarshpandey18/News-App/blob/main/screenshot/screenshot_5.jpg" alt="Screenshot 5" style="width: 30%; margin-bottom: 10px;">
@@ -155,6 +157,7 @@ To get started with the News App, follow these steps:
 - **Dart**
 - **HTTP package for API calls**
 - **Cached Network Image package for image looking**
+- **Url Launcher package**
 
 ## Contributing
 
