@@ -1,6 +1,4 @@
-import 'package:news_app/models/everything_news_model.dart';
 import 'package:news_app/models/news_channel_headline.dart';
-import 'package:news_app/repository/everything_repository.dart';
 import 'package:news_app/repository/news%20_repository.dart';
 
 class NewsViewModel {
