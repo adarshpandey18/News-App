@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:news_app/core/sources.dart';
+import 'package:news_app/models/everything_news_model.dart';
 import 'package:news_app/models/news_channel_headline.dart';
 import 'package:news_app/pages/more_information.dart';
-import 'package:news_app/view_model/NewsViewMode.dart';
+import 'package:news_app/view_model/everything_news_view_model.dart';
+import 'package:news_app/view_model/headline_news_view_model.dart';
 import 'package:news_app/widgets/drawer_tile.dart';
+import 'package:news_app/widgets/every_news_tile.dart';
 import 'package:news_app/widgets/heading.dart';
 import 'package:news_app/widgets/loading.dart';
 
@@ -18,14 +21,18 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late NewsViewModel newsViewModel;
+  late EverythingNewsViewModel everythingNewsViewModel;
   @override
   void initState() {
     super.initState();
-    newsViewModel = NewsViewModel(sources: "bbc-news");
+    newsViewModel = NewsViewModel(sources: sourceValue.values.first);
+    everythingNewsViewModel =
+        EverythingNewsViewModel(sources: sourceValue.values.first);
   }
 
   void changeSource(String newSource) {
     setState(() {
+      everythingNewsViewModel = EverythingNewsViewModel(sources: newSource);
       newsViewModel = NewsViewModel(sources: newSource);
       Navigator.pop(context);
     });
@@ -102,42 +109,81 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: FutureBuilder<NewsChannelHeadline>(
-        future: newsViewModel.fetchNewsChannelHeadlineApi(),
+      body: FutureBuilder(
+        future: Future.wait([
+          newsViewModel.fetchNewsChannelHeadlineApi(),
+          everythingNewsViewModel.fetchEveryNewsFromSourceApi(),
+        ]),
         builder: (BuildContext context, snapshot) {
+          NewsChannelHeadline? newsChannelData =
+              snapshot.data![0] as NewsChannelHeadline;
+          EverythingNews? everythingNewsData =
+              snapshot.data![1] as EverythingNews;
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: Loading(),
             );
           } else if (!snapshot.hasData ||
-              snapshot.data!.articles == null ||
-              snapshot.data!.articles!.isEmpty) {
+              newsChannelData.articles == null ||
+              newsChannelData.articles!.isEmpty) {
             return const Center(
               child: Text("No articles found."),
             );
           } else {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: snapshot.data!.articles!.length,
-                itemBuilder: (context, index) {
-                  final article = snapshot.data!.articles![index];
-                  return Heading(
-                    imageUrl: article.urlToImage ?? "",
-                    title: article.title ?? "",
-                    source: article.source?.name ?? "",
-                    onTap: () => onTap(
-                        article.urlToImage ?? "",
-                        article.source?.name ?? "",
-                        formatDateTime(
-                          article.publishedAt.toString(),
-                        ),
-                        article.description.toString(),
-                        article.content.toString(),
-                        article.url ?? ""),
-                  );
-                },
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 280,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: newsChannelData.articles!.length,
+                      itemBuilder: (context, index) {
+                        final article = newsChannelData.articles![index];
+                        return Heading(
+                          imageUrl: article.urlToImage ?? "",
+                          title: article.title ?? "",
+                          source: article.source?.name ?? "",
+                          onTap: () => onTap(
+                              article.urlToImage ?? "",
+                              article.source?.name ?? "",
+                              formatDateTime(
+                                article.publishedAt.toString(),
+                              ),
+                              article.description.toString(),
+                              article.content.toString(),
+                              article.url ?? ""),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: everythingNewsData.articles!.length,
+                      itemBuilder: (context, index) {
+                        final article = everythingNewsData.articles![index];
+                        return EveryNewsTile(
+                          url: article.urlToImage ?? "",
+                          description: article.description.toString(),
+                          content: article.content.toString(),
+                          onTap: () => onTap(
+                              article.urlToImage ?? "",
+                              article.source?.name ?? "",
+                              formatDateTime(
+                                article.publishedAt.toString(),
+                              ),
+                              article.description.toString(),
+                              article.content.toString(),
+                              article.url ?? ""),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             );
           }
