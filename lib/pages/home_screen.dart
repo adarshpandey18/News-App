@@ -121,21 +121,23 @@ class _HomeScreenState extends State<HomeScreen> {
           everythingNewsViewModel.fetchEveryNewsFromSourceApi(),
         ]),
         builder: (BuildContext context, snapshot) {
-          NewsChannelHeadline? newsChannelData =
-              snapshot.data![0] as NewsChannelHeadline;
-          EverythingNews? everythingNewsData =
-              snapshot.data![1] as EverythingNews;
+          
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: Loading(),
             );
           } else if (!snapshot.hasData ||
-              newsChannelData.articles == null ||
-              newsChannelData.articles!.isEmpty) {
+        snapshot.data!.length < 2 ||
+        snapshot.data![0] == null ||
+        snapshot.data![1] == null) {
             return const Center(
               child: Text("No articles found."),
             );
           } else {
+            NewsChannelHeadline? newsChannelData =
+              snapshot.data![0] as NewsChannelHeadline;
+          EverythingNews? everythingNewsData =
+              snapshot.data![1] as EverythingNews;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
